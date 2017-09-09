@@ -1,0 +1,43 @@
+- name: Link to conf directory
+  file:
+    state: link
+    src: "{{ cassandra_config_dir }}"
+    dest: /etc/cassandra
+    force: True
+
+- name: Logback Config
+  template:
+    src: logback.xml.j2
+    dest: "{{ cassandra_config_dir }}/logback.xml"
+    owner: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+    mode: 0644
+  notify: restart cassandra    
+
+- name: Cassandra Config
+  template:
+    src: cassandra.yaml.j2
+    dest: "{{ cassandra_config_dir }}/cassandra.yaml"
+    owner: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+    mode: 0644
+  notify: restart cassandra
+
+- name: RackDC Properties
+  template:
+    src: cassandra-rackdc.properties.j2
+    dest: "{{ cassandra_config_dir }}/cassandra-rackdc.properties"
+    owner: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+  notify: restart cassandra
+
+- name: SystemD Unit File
+  template:
+    src: cassandra.service.j2
+    dest: /etc/systemd/system/cassandra.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload systemd
+    - restart cassandra

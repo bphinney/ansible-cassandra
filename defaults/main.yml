@@ -1,0 +1,24 @@
+cassandra_group: cassandra
+cassandra_user: cassandra
+cassandra_staging_dir: ./tarballs
+cassandra_install_dir: /usr/share
+cassandra_version: 3.0.14
+cassandra_version_name: "apache-cassandra-{{ cassandra_version }}"
+cassandra_real_home: "{{ cassandra_install_dir }}/{{ cassandra_version_name }}"
+cassandra_home: "{{ cassandra_install_dir }}/cassandra"
+cassandra_archive: "{{ cassandra_version_name }}-bin.tar.gz"
+cassandra_download_url: "http://www.mirrorservice.org/sites/ftp.apache.org/cassandra/{{ cassandra_version }}/{{ cassandra_archive }}"
+cassandra_config_dir: "{{ cassandra_real_home }}/conf"
+cassandra_protocol_version: 4
+cassandra_pid_file: /var/run/cassandra/cassandra.pi
+cassandra_log_dir: /var/log/cassandra
+cassandra_cluster_name: Test Cluster
+cassandra_datacenter: DC1
+cassandra_rack: ''
+cassandra_data_dirs: [/var/lib/cassandra/data]
+cassandra_commit_log_dir: /var/lib/cassandra/commitlog
+cassandra_saved_caches_dir: /var/lib/cassandra/saved_caches
+cassandra_hints_dir: /var/lib/cassandra/hints
+cassandra_rpc_address: '0.0.0.0'
+cassandra_endpoint_snitch: 'GossipingPropertyFileSnitch'
+cassandra_listen_interface: 'eth0'

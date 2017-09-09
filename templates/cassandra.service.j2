@@ -1,0 +1,20 @@
+[Unit]
+Description=Cassandra Service
+After=network.target
+
+[Service]
+ExecStartPre=- /sbin/swapoff -a
+ExecStart={{ cassandra_home }}/bin/cassandra -f
+StandardOutput=journal
+StandardError=journal
+WorkingDirectory={{ cassandra_home }}
+Restart=always
+RestartSec=60
+TimeoutStopSec=120
+TimeoutStartSec=120
+LimitNOFILE=infinity
+User={{ cassandra_user }}
+Group={{ cassandra_group }}
+
+[Install]
+WantedBy=multi-user.target

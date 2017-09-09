@@ -1,0 +1,21 @@
+---
+- hosts: cassandra_seed
+  become: yes
+  gather_facts: yes
+  vars:
+    cassandra_listen_interface: enp0s3
+    cassandra_seed_list: "{{ groups['cassandra_seed'] | map('extract', hostvars, ['ansible_' + cassandra_listen_interface, 'ipv4', 'address']) | list }}"
+  roles:
+    - ansible-oracle-jdk
+    - ansible-cassandra
+
+- hosts: cassandra:!cassandra_seed
+  become: yes
+  gather_facts: yes
+  serial: 1
+  vars:
+    cassandra_listen_interface: enp0s3
+    cassandra_seed_list: "{{ groups['cassandra_seed'] | map('extract', hostvars, ['ansible_' + cassandra_listen_interface, 'ipv4', 'address']) | list }}"
+  roles:
+    - ansible-oracle-jdk
+    - ansible-cassandra

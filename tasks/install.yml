@@ -1,0 +1,72 @@
+- name: Create cassandra group
+  group:
+    name: "{{ cassandra_group }}"
+    state: present
+    system: yes
+  register: cassandra_group_created
+
+- name: Create cassandra user
+  user:
+    home: "/home/{{ cassandra_user }}"
+    name: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+    system: yes
+  when: cassandra_group_created|changed
+
+- name: Download tarball
+  local_action: get_url url="{{ cassandra_download_url }}" dest="{{ cassandra_staging_dir }}/{{ cassandra_archive }}"
+  become: False
+  run_once: True
+
+- name: Copy tarball
+  copy:
+    src: "{{ cassandra_staging_dir }}/{{ cassandra_archive }}"
+    dest: "{{ cassandra_install_dir }}"
+    owner: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+    mode: 0700
+
+- name: Unpack
+  unarchive:
+    src: "{{ cassandra_staging_dir }}/{{ cassandra_archive }}"
+    dest: "{{ cassandra_install_dir }}"
+    owner: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+    mode: 0700
+
+- name: Symlink to current version
+  file:
+    state: link
+    src: "{{ cassandra_real_home }}"
+    dest: "{{ cassandra_home }}"
+    owner: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+
+- name: Add cassandra to PATH
+  template:
+    src: cassandra.sh.j2
+    dest: /etc/profile.d/cassadra.sh
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Create cassandra directories
+  file:
+    state: directory
+    path: "{{ item }}"
+    owner: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+    mode: 0755
+  with_items:
+    - "{{ cassandra_commit_log_dir }}"
+    - "{{ cassandra_saved_caches_dir }}"
+    - "{{ cassandra_log_dir }}"
+
+- name: Create cassandra data directories
+  file:
+    state: directory
+    path: "{{ item }}"
+    owner: "{{ cassandra_user }}"
+    group: "{{ cassandra_group }}"
+    mode: 0755
+  with_items: "{{ cassandra_data_dirs }}"

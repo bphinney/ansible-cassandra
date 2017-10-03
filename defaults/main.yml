@@ -10,7 +10,7 @@ cassandra_archive: "{{ cassandra_version_name }}-bin.tar.gz"
 cassandra_download_url: "http://www.mirrorservice.org/sites/ftp.apache.org/cassandra/{{ cassandra_version }}/{{ cassandra_archive }}"
 cassandra_config_dir: "{{ cassandra_real_home }}/conf"
 cassandra_protocol_version: 4
-cassandra_pid_file: /var/run/cassandra/cassandra.pi
+cassandra_pid_file: /var/run/cassandra/cassandra.pid
 cassandra_log_dir: /var/log/cassandra
 cassandra_cluster_name: Test Cluster
 cassandra_datacenter: DC1

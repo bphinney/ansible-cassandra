@@ -15,10 +15,10 @@ cassandra_log_dir: /var/log/cassandra
 cassandra_cluster_name: Test Cluster
 cassandra_datacenter: DC1
 cassandra_rack: ''
-cassandra_data_dirs: [/data/cassandra/data]
-cassandra_commit_log_dir: /data/cassandra/commitlog
-cassandra_saved_caches_dir: /data/cassandra/saved_caches
-cassandra_hints_dir: /data/cassandra/hints
+cassandra_data_dirs: [/var/lib/cassandra/data]
+cassandra_commit_log_dir: /var/lib/cassandra/commitlog
+cassandra_saved_caches_dir: /var/lib/cassandra/saved_caches
+cassandra_hints_dir: /var/lib/cassandra/hints
 cassandra_rpc_address: '0.0.0.0'
 cassandra_endpoint_snitch: 'GossipingPropertyFileSnitch'
 cassandra_listen_interface: 'eth0'

@@ -5,6 +5,10 @@
   vars:
     cassandra_listen_interface: eth0
     cassandra_seed_list: "{{ groups['cassandra_seed'] | map('extract', hostvars, ['ansible_' + cassandra_listen_interface, 'ipv4', 'address']) | list }}"
+    cassandra_data_dirs: [/data/cassandra/data]
+    cassandra_commit_log_dir: /data/cassandra/commitlog
+    cassandra_saved_caches_dir: /data/cassandra/saved_caches
+    cassandra_hints_dir: /data/cassandra/hints
   roles:
     - ansible-oracle-jdk
     - ansible-cassandra
@@ -16,6 +20,10 @@
   vars:
     cassandra_listen_interface: eth0
     cassandra_seed_list: "{{ groups['cassandra_seed'] | map('extract', hostvars, ['ansible_' + cassandra_listen_interface, 'ipv4', 'address']) | list }}"
+    cassandra_data_dirs: [/data/cassandra/data]
+    cassandra_commit_log_dir: /data/cassandra/commitlog
+    cassandra_saved_caches_dir: /data/cassandra/saved_caches
+    cassandra_hints_dir: /data/cassandra/hints
   roles:
     - ansible-oracle-jdk
     - ansible-cassandra

@@ -4,6 +4,7 @@
     src: "{{ cassandra_config_dir }}"
     dest: /etc/cassandra
     force: True
+  become: true
 
 - name: Logback Config
   template:
@@ -13,6 +14,7 @@
     group: "{{ cassandra_group }}"
     mode: 0644
   notify: restart cassandra    
+  become: true
 
 - name: Cassandra Config
   template:
@@ -22,6 +24,7 @@
     group: "{{ cassandra_group }}"
     mode: 0644
   notify: restart cassandra
+  become: true
 
 - name: RackDC Properties
   template:
@@ -30,6 +33,7 @@
     owner: "{{ cassandra_user }}"
     group: "{{ cassandra_group }}"
   notify: restart cassandra
+  become: true
 
 - name: SystemD Unit File
   template:
@@ -41,3 +45,5 @@
   notify:
     - reload systemd
     - restart cassandra
+  become: true
+

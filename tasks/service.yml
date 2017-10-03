@@ -2,6 +2,7 @@
 - name: Start cassandra
   service: name=cassandra state=started enabled=yes
   register: cassandra_started
+  become: true
 
 - name: Wait for cassandra to be ready
   command: "{{ cassandra_home }}/bin/cqlsh -e 'describe keyspaces' {{ hostvars[inventory_hostname]['ansible_' + cassandra_listen_interface]['ipv4']['address'] }}"
@@ -11,3 +12,5 @@
   until: cassandra_ready.rc == 0
   delay: 5
   retries: 60
+  become: true
+

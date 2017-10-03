@@ -4,6 +4,7 @@
     state: present
     system: yes
   register: cassandra_group_created
+  become: true
 
 - name: Create cassandra user
   user:
@@ -12,11 +13,13 @@
     group: "{{ cassandra_group }}"
     system: yes
   when: cassandra_group_created|changed
+  become: true
 
 - name: Download tarball
   local_action: get_url url="{{ cassandra_download_url }}" dest="{{ cassandra_staging_dir }}/{{ cassandra_archive }}"
   become: False
   run_once: True
+  become: true
 
 - name: Copy tarball
   copy:
@@ -25,6 +28,7 @@
     owner: "{{ cassandra_user }}"
     group: "{{ cassandra_group }}"
     mode: 0700
+  become: true
 
 - name: Unpack
   unarchive:
@@ -33,6 +37,7 @@
     owner: "{{ cassandra_user }}"
     group: "{{ cassandra_group }}"
     mode: 0700
+  become: true
 
 - name: Symlink to current version
   file:
@@ -41,6 +46,7 @@
     dest: "{{ cassandra_home }}"
     owner: "{{ cassandra_user }}"
     group: "{{ cassandra_group }}"
+  become: true
 
 - name: Add cassandra to PATH
   template:
@@ -49,6 +55,7 @@
     mode: 0644
     owner: root
     group: root
+  become: true
 
 - name: Create cassandra directories
   file:
@@ -61,6 +68,7 @@
     - "{{ cassandra_commit_log_dir }}"
     - "{{ cassandra_saved_caches_dir }}"
     - "{{ cassandra_log_dir }}"
+  become: true
 
 - name: Create cassandra data directories
   file:
@@ -70,3 +78,4 @@
     group: "{{ cassandra_group }}"
     mode: 0755
   with_items: "{{ cassandra_data_dirs }}"
+  become: true

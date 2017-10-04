@@ -1,1 +1,3 @@
 - src: https://github.com/nrf110/ansible-oracle-jdk
+
+#- src: https://github.com/malk/ansible-java8-oracle

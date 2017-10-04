@@ -11,7 +11,9 @@
     cassandra_hints_dir: /data/cassandra/hints
   roles:
     - ansible-oracle-jdk
+    #- ansible-java8-oracle
     - ansible-cassandra
+    - ansible-cassandra-backup
 
 - hosts: cassandra:!cassandra_seed
   become: yes
@@ -26,4 +28,6 @@
     cassandra_hints_dir: /data/cassandra/hints
   roles:
     - ansible-oracle-jdk
+    #- ansible-java8-oracle
     - ansible-cassandra
+    - ansible-cassandra-backup

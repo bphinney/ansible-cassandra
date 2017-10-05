@@ -1,4 +1,4 @@
-- src: https://github.com/nrf110/ansible-oracle-jdk
+- src: https://github.com/bphinney/ansible-oracle-jdk
 
 - src: https://nexus.ncrsmb.com/momentum-ansible/momentum/ansible-cassandra-backup/1.1/ansible-cassandra-backup-1.1.tar.gz
 
